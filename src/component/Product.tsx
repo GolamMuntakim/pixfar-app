@@ -11,13 +11,13 @@ const Product = () => {
     const [page, setPage] = useState(1);
     const searchQuery = useSelector((state: RootState) => state.cart.searchQuery); 
     const allProducts = useSelector((state: RootState) => state.cart.products) || [];
-    const { data = [], isFetching } = useGetProductsQuery({ page }, { skip: page === 0 }); // Skip if page is 0
+    const { data = [], isFetching } = useGetProductsQuery({ page }, { skip: page === 0 }); 
     const [loading, setLoading] = useState(false); 
 
-    // Effect to handle the fetched data
+    
     useEffect(() => {
         if (data.length > 0) {
-            // Append new products to existing products
+            
             dispatch(setProducts([...allProducts, ...data])); 
         }
         setLoading(false); 
@@ -30,27 +30,27 @@ const Product = () => {
 
     const handleInfiniteScroll = () => {
         const isBottom = window.innerHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight - 1;
-        if (isBottom && !isFetching && !loading && !searchQuery) { // Only fetch if not searching
+        if (isBottom && !isFetching && !loading && !searchQuery) {
             setLoading(true);
-            setPage(prevPage => prevPage + 1); // Increment page for next data fetch
+            setPage(prevPage => prevPage + 1);
         }
     };
 
     useEffect(() => {
         window.addEventListener('scroll', handleInfiniteScroll);
         return () => window.removeEventListener('scroll', handleInfiniteScroll);
-    }, [isFetching, loading, searchQuery]); // Add searchQuery to dependencies
+    }, [isFetching, loading, searchQuery]); 
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const query = e.target.value;
         dispatch(setSearchQuery(query)); 
-        setLoading(true); // Show loading state on search
+        setLoading(true); 
         if (query === '') {
-            setPage(1); // Reset page number when searching
+            setPage(1); 
         }
     };
 
-    // Filter products based on search query
+    
     const filteredProducts = searchQuery
         ? allProducts.filter((product: PostProducts) =>
             product.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -59,7 +59,7 @@ const Product = () => {
             if (b.title.toLowerCase().startsWith(searchQuery.toLowerCase())) return 1;
             return 0;
         })
-        : allProducts; // Show all products if no search query
+        : allProducts; 
 
     return (
         <div>
@@ -111,7 +111,6 @@ const Product = () => {
             </div>
             <div className='container mx-auto z-10 flex justify-center items-center' data-testid="loading-spinner">
                 {loading && <Loading />}
-                {/* {isFetching && !loading && <Loading />}  */}
             </div>
         </div>
     );
