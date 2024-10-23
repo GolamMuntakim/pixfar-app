@@ -17,7 +17,7 @@ const Cart = () => {
     }
 
     return (
-        <div className='container mx-auto mt-10 mx-w-xl'>
+        <div className='container mx-auto mt-10 mx-w-xl h-screen'>
             
             <div className='container mx-auto justify-center items-center flex flex-col lg:flex-row gap-20'>
                 <div className='bg-fuchsia-950 w-64 h-24 rounded-md flex items-center justify-center text-white text-xl font-mono p-2'>
